@@ -8,5 +8,11 @@
     <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
     <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
 {% endfor %}
+
+{% if question.choice_set.count == 0 %}
+<p>No choice available</p>
+{% else %}
 <input type="submit" value="Vote" />
+{% endif %}
+
 </form>

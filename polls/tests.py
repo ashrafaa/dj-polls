@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.urls import reverse
 import datetime
 
-from .models import Question
+from .models import Question, Choice
 
 class QuestionMethodTests(TestCase):
 
@@ -122,3 +122,14 @@ class QuestionIndexDetailTests(TestCase):
         url = reverse('polls:detail', args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
+
+class QuestionChoiceTests(TestCase):
+
+    def test_question_with_no_choice(self):
+        """
+        Question with no choice should reflect that.
+        """
+        poll_question = create_question(question_text='Poll question.', days=-5)
+        url = reverse('polls:detail', args=(poll_question.id,))
+        response = self.client.get(url)
+        self.assertContains(response, "No choice available")
